@@ -6,40 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chaofly.github.io">
-  <title>使用python验证码识别来爆破网站后台 | chaofly</title>
+  <title>CTF web学习心得 | chaofly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#使用python验证码识别来爆破网站后台在我的上一篇博客中，讲解了我用python来识别验证码的原理，对于有些人来说，他可能并不想知道验证码识别的原理，只是想寻找方法去识别验证码从而使用脚本登录网站或者爆破网站的密码。 这几天我把我之前的代码重写了一下（之前写的真的很乱，一般人都看不下去），现在只需要改一下配置文件，你就可以定制自己的目标网站的验证码识别。  运行环境为python3 适用于验证">
+  <meta name="description" content="这几天看了一下实验吧里的web题，有一些体会，写下来做个记录  浏览器编码问题在做题的时候遇到了许多有关编码问题，大致分为 url编码问题     url编码的特点是%号， 浏览器的地址栏中会自动解析url编码，如你在浏览器地址栏输入%27，它就会被解析成逗号（可以拿使用get请求的网址做实验），因此一些钓鱼网站会把他们的网址用url编码，这样就不容易被发现（大家注意如果有人发很长一串的含好多%号">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用python验证码识别来爆破网站后台">
-<meta property="og:url" content="https://chaofly.github.io/2018/01/19/使用python验证码识别来爆破网站后台/index.html">
+<meta property="og:title" content="CTF web学习心得">
+<meta property="og:url" content="https://chaofly.github.io/2018/01/25/CTF-web学习心得/index.html">
 <meta property="og:site_name" content="chaofly">
-<meta property="og:description" content="#使用python验证码识别来爆破网站后台在我的上一篇博客中，讲解了我用python来识别验证码的原理，对于有些人来说，他可能并不想知道验证码识别的原理，只是想寻找方法去识别验证码从而使用脚本登录网站或者爆破网站的密码。 这几天我把我之前的代码重写了一下（之前写的真的很乱，一般人都看不下去），现在只需要改一下配置文件，你就可以定制自己的目标网站的验证码识别。  运行环境为python3 适用于验证">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119102727797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119102713500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119095423278?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119095929900?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119100253979?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119111816092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119111828378?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119111803563?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119111839366?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119102727797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119113309493?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119113412233?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119115145839?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119115130070?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119114203170?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119114310004?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119115659341?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119115645330?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119120540464?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119120529758?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180119120548115?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-01-19T05:25:12.112Z">
+<meta property="og:description" content="这几天看了一下实验吧里的web题，有一些体会，写下来做个记录  浏览器编码问题在做题的时候遇到了许多有关编码问题，大致分为 url编码问题     url编码的特点是%号， 浏览器的地址栏中会自动解析url编码，如你在浏览器地址栏输入%27，它就会被解析成逗号（可以拿使用get请求的网址做实验），因此一些钓鱼网站会把他们的网址用url编码，这样就不容易被发现（大家注意如果有人发很长一串的含好多%号">
+<meta property="og:updated_time" content="2018-01-25T04:04:17.306Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用python验证码识别来爆破网站后台">
-<meta name="twitter:description" content="#使用python验证码识别来爆破网站后台在我的上一篇博客中，讲解了我用python来识别验证码的原理，对于有些人来说，他可能并不想知道验证码识别的原理，只是想寻找方法去识别验证码从而使用脚本登录网站或者爆破网站的密码。 这几天我把我之前的代码重写了一下（之前写的真的很乱，一般人都看不下去），现在只需要改一下配置文件，你就可以定制自己的目标网站的验证码识别。  运行环境为python3 适用于验证">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20180119102727797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="CTF web学习心得">
+<meta name="twitter:description" content="这几天看了一下实验吧里的web题，有一些体会，写下来做个记录  浏览器编码问题在做题的时候遇到了许多有关编码问题，大致分为 url编码问题     url编码的特点是%号， 浏览器的地址栏中会自动解析url编码，如你在浏览器地址栏输入%27，它就会被解析成逗号（可以拿使用get请求的网址做实验），因此一些钓鱼网站会把他们的网址用url编码，这样就不容易被发现（大家注意如果有人发很长一串的含好多%号">
   
     <link rel="alternative" href="/atom.xml" title="chaofly" type="application/atom+xml">
   
@@ -161,83 +139,85 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-使用python验证码识别来爆破网站后台" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-CTF-web学习心得" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      使用python验证码识别来爆破网站后台
+      CTF web学习心得
     </h1>
   
 
         
-        <a href="/2018/01/19/使用python验证码识别来爆破网站后台/" class="archive-article-date">
-  	<time datetime="2018-01-19T05:24:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
+        <a href="/2018/01/25/CTF-web学习心得/" class="archive-article-date">
+  	<time datetime="2018-01-25T04:03:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#使用python验证码识别来爆破网站后台<br>在我的上一篇博客中，讲解了我用python来识别验证码的原理，对于有些人来说，他可能并不想知道验证码识别的原理，只是想寻找方法去识别验证码从而使用脚本登录网站或者爆破网站的密码。</p>
-<p>这几天我把我之前的代码重写了一下（之前写的真的很乱，一般人都看不下去），现在只需要改一下配置文件，你就可以定制自己的目标网站的验证码识别。</p>
-<ol>
-<li>运行环境为python3</li>
-<li>适用于验证码是通过get请求图片的和噪声为点，线的网站<br><img src="http://img.blog.csdn.net/20180119102727797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180119102713500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-<li>网站验证码是+-*运算的暂不支持，但是逻辑是一样的，可以通过改我的源代码来实现这个功能</li>
-</ol>
-<p><a href="https://github.com/chaofly/ocr" target="_blank" rel="noopener">代码下载</a></p>
-<p>下载了代码后，代码目录为</p>
-<p><img src="http://img.blog.csdn.net/20180119095423278?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="代码目录"></p>
+        <p>这几天看了一下实验吧里的web题，有一些体会，写下来做个记录</p>
 <ul>
-<li>pycache是python运行产生的运行文件，删了也可以在运行的时候自己生成</li>
-<li><p>yzm文件夹是存放识别样本的目录，如果文件里没有自行建立，目录结构为<br><img src="http://img.blog.csdn.net/20180119095929900?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="yzm目录结构"><br>里面的文件夹以要识别的元素命名，比如我实验的网站验证码是由 0-9数字组成，因此我的文件夹以0-9命名，如果目标网站有a-z，大家也要建立对应的文件夹。文件夹下面放用以识别的样本。如 0文件夹下面<br><img src="http://img.blog.csdn.net/20180119100253979?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="0号文件夹目录"><br>（如何得到样本我将在后面写出，使用这个代码不需要图片识别方面的知识）</p>
-</li>
-<li><p>config.py是程序的配置文件，定制图像识别只需要更改这个文件即可，不需要改源码。代码如下。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span>:</span></span><br><span class="line">		<span class="comment">#验证码的url</span></span><br><span class="line">	valiCodeUrl = <span class="string">''</span></span><br><span class="line">		<span class="comment">#验证码提交地址url</span></span><br><span class="line">	postUrl = <span class="string">''</span></span><br><span class="line">		<span class="comment">#登录页面的url</span></span><br><span class="line">	hostUrl = <span class="string">''</span></span><br><span class="line">		<span class="comment">#搜索噪声的范围,如以3*3的大小来搜索整张图</span></span><br><span class="line">	noiseRange = <span class="number">3</span></span><br><span class="line">		<span class="comment">#消除噪声的标准，如在3*3大小内，若非白色的点小于2个就清除</span></span><br><span class="line">	noiseClear = <span class="number">2</span>		<span class="comment">#去噪后的图像保存地址，观察图片调整上面参数</span></span><br><span class="line">	unNoiseIm = <span class="string">'./unNoiseIm.png'</span></span><br><span class="line">		<span class="comment">#获取到的验证码图片，便于比对正确性</span></span><br><span class="line">	valiCodeIm = <span class="string">'./image.jpg'</span></span><br><span class="line">		<span class="comment">#验证码包含的字符</span></span><br><span class="line">	iconset = [<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'3'</span>,<span class="string">'4'</span>,<span class="string">'5'</span>,<span class="string">'6'</span>,<span class="string">'7'</span>,<span class="string">'8'</span>,<span class="string">'9'</span>]</span><br><span class="line">		<span class="comment">#需要识别的验证码的每个内容的横坐标,使用画图工具判断</span></span><br><span class="line">	letters = [(<span class="number">4</span>,<span class="number">13</span>),(<span class="number">14</span>,<span class="number">22</span>),(<span class="number">23</span>,<span class="number">33</span>),(<span class="number">34</span>,<span class="number">44</span>)] </span><br><span class="line">	<span class="comment">#[(7,15),(16,24),(25,33),(35,43)]</span></span><br><span class="line">		<span class="comment">#是否训练样本</span></span><br><span class="line">	isTrain = <span class="keyword">False</span> </span><br><span class="line">		<span class="comment">#相似度需要达到多少才算合格</span></span><br><span class="line">	qualified = <span class="number">0.94</span></span><br><span class="line">	<span class="comment">#训练集是否初始化</span></span><br><span class="line">	initCode = <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>image.jpg是每一次程序运行时获取的验证码图片，方便增加样本时比对是否正确识别，由代码自动生成</p>
-</li>
-<li><p>unNoiseIm.png 是去除噪声并且变成黑白后的验证码（噪声是验证码上面的与验证码内容无关的点，线之类的用以干扰验证码识别的东西）</p>
-</li>
-<li>valiCode.py 是程序的主文件，识别样本准备好了之后大家可以把自己的代码放在这个目录下，然后<code>from valiCode import ValiCode</code>,再实例化对象<code>a = ValiCode() 
-  yzm=a.compare()</code><br>  a.compare()返回的是验证码的识别结果<br>  这样验证码就得到了。</li>
+<li><strong>浏览器编码问题</strong><br>在做题的时候遇到了许多有关编码问题，大致分为<ul>
+<li>url编码问题</li>
 </ul>
-<p>在使用过程中可能会遇到报错，提示缺少某库，这时候大家把相应的库pip一下就好了，可能python3会遇到PIL库pip不了的情况，如果是python3.6的话大家可以使用我代码文件夹里的Pillow-5.0.0-cp36….whl，其他版本可以自己到网上下载。</p>
-<hr>
-<p>##介绍完目录，现在来介绍使用方法</p>
-<ol>
-<li>下载好代码之后,解压到一个地方<br><img src="http://img.blog.csdn.net/20180119111816092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>然后打开文件夹<br><img src="http://img.blog.csdn.net/20180119111828378?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>进入valiCode-ocr下的valiCode文件夹<br><img src="http://img.blog.csdn.net/20180119111803563?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-</ol>
-<p>在此目录下新建一个文件夹，名字叫 yzm，再yzm文件夹里新建 以你要识别的验证码元素名 命名的文件夹，如我要识别的验证码只有0-9，如果有a-z,可以自行建立，配置文件里的iconset = [‘0’,’1’,’2’,’3’,’4’,’5’,’6’,’7’,’8’,’9’]也要随之改变<br><img src="http://img.blog.csdn.net/20180119111839366?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<ol>
-<li>建立好目录之后打开 config.py文件<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span>:</span></span><br><span class="line">		<span class="comment">#验证码的url</span></span><br><span class="line">	valiCodeUrl = <span class="string">''</span></span><br><span class="line">		<span class="comment">#验证码提交地址url</span></span><br><span class="line">	postUrl = <span class="string">''</span></span><br><span class="line">		<span class="comment">#登录页面的url</span></span><br><span class="line">	hostUrl = <span class="string">''</span></span><br><span class="line">		<span class="comment">#搜索噪声的范围,如以3*3的大小来搜索整张图</span></span><br><span class="line">	noiseRange = <span class="number">3</span></span><br><span class="line">		<span class="comment">#消除噪声的标准，如在3*3大小内，若非白色的点小于2个就清除</span></span><br><span class="line">	noiseClear = <span class="number">2</span>		<span class="comment">#去噪后的图像保存地址，观察图片调整上面参数</span></span><br><span class="line">	unNoiseIm = <span class="string">'./unNoiseIm.png'</span></span><br><span class="line">		<span class="comment">#获取到的验证码图片，便于比对正确性</span></span><br><span class="line">	valiCodeIm = <span class="string">'./image.jpg'</span></span><br><span class="line">		<span class="comment">#验证码包含的字符</span></span><br><span class="line">	iconset = [<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'3'</span>,<span class="string">'4'</span>,<span class="string">'5'</span>,<span class="string">'6'</span>,<span class="string">'7'</span>,<span class="string">'8'</span>,<span class="string">'9'</span>]</span><br><span class="line">		<span class="comment">#需要识别的验证码的每个内容的横坐标,使用画图工具判断</span></span><br><span class="line">	letters = [(<span class="number">4</span>,<span class="number">13</span>),(<span class="number">14</span>,<span class="number">22</span>),(<span class="number">23</span>,<span class="number">33</span>),(<span class="number">34</span>,<span class="number">44</span>)] </span><br><span class="line">	<span class="comment">#[(7,15),(16,24),(25,33),(35,43)]</span></span><br><span class="line">		<span class="comment">#是否训练样本</span></span><br><span class="line">	isTrain = <span class="keyword">False</span> </span><br><span class="line">		<span class="comment">#相似度需要达到多少才算合格</span></span><br><span class="line">	qualified = <span class="number">0.94</span></span><br><span class="line">	<span class="comment">#训练集是否初始化</span></span><br><span class="line">	initCode = <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>填入你想识别验证码网站的url（用开发者工具抓取）</p>
-<ul>
-<li>valiCodeUrl，打开开发者工具，切换到网络选项，刷新一下验证码，会出现一个验证证码的url，把它填在这里即可<br>  <img src="http://img.blog.csdn.net/20180119102727797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述">    </li>
-<li>postUrl ，随便填入用户名，密码和验证码然后点击登录，出现在开发者工具里的 标有post的就是url<br><img src="http://img.blog.csdn.net/20180119113309493?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-<li><p>hostUrl ，就是浏览器上的url<br><img src="http://img.blog.csdn.net/20180119113412233?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-</li>
-<li><p>下载一张验证码图片，用画图工具打开<br><img src="http://img.blog.csdn.net/20180119115145839?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180119115130070?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>确定验证码里每个元素的横坐标区间，<br>如上图第一个元素的横坐标区间为3，13，以此测出所有元素的横坐标区间然后填入letters<br>格式 letters = [(3,13),(14,22),(23,33),(34,44)] </p>
-</li>
-<li><p>其他的先不变，让isTrain = True,initCode = True</p>
-</li>
-<li>运行valiCode.py,<br><img src="http://img.blog.csdn.net/20180119114203170?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这时候程序主目录下就会出现，一些以时间戳命名的gif文件<br><img src="http://img.blog.csdn.net/20180119114310004?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>人工识别它  并把它放在yzm目录下对应的文件夹里，如果识别不清楚，看看程序主目录下的验证码源图片image.jpg和去噪后的图片unNoiseIm.png是否清楚，不清楚的话，就去改config.py里的noiseRange = 3，noiseClear = 2的值（noiseRange/noiseClear的值越小，清楚效果越强，太小了，图片可能都看不见了),再运行程序直到生成的unNoiseIm满意。<br>反复执行上面的操作直到yzm文件下的每个文件夹都至少有一张图片，<br>然后把initCode = False,再执行程序</li>
 </ul>
-<p><img src="http://img.blog.csdn.net/20180119115659341?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>左边的数字代表相似度，右边代表识别出来的数字，相似度&gt;qualified 的就会跳过，可以手动修改qualified<br>产生的图片会出现在yzm目录下<br>  <img src="http://img.blog.csdn.net/20180119115645330?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>  人工判断识别是否正确，然后把对应的图片放入对应的文件夹中<br>  反复执行这个操作，知道所有识别都大于qualified ，或者你觉得识别出来的结果差不多都是对的（如果验证码的噪声比较复杂可能需要的时间比较长），样本准备就完成了</p>
-<ul>
-<li>最后把isTrain=False,就可以在自己的程序中调用这个程序了。</li>
+<ol>
+<li>url编码的特点是%号， 浏览器的地址栏中会自动解析url编码，如你在浏览器地址栏输入%27，它就会被解析成逗号（可以拿使用get请求的网址做实验），因此一些钓鱼网站会把他们的网址用url编码，这样就不容易被发现（大家注意如果有人发很长一串的含好多%号的网址给你，很有可能是钓鱼网站）</li>
+<li>浏览器会自动把除地址栏上外其他地方的请求信息用url编码，当然只有一些字符可以被编码，数字和字母是不会被编码的（如你提交的表单信息），这也是为什么很多人在输入框中输入%00，却不能达到想要的效果，因为浏览器把%号url编码为了%25，这时候就需要使用burpsuite改包</li>
+<li>（个人理解，不知道对不对），url编码实际上就是使用16进制的ascii编码，把\x变成了%号，如0x27是逗号的ascii编码，使用chr(0x27)，可以得到逗号，其他符号也是如此。。。。实验吧里有一题是考md5变长攻击的，主要适用于不知道之前用于加密的字符的情况下，知道密文，需要求出用于加密的密文新加上一个自定义字符的md5值。在最后算出payload之后还需要把里面的\x变为%号才能成功拿到flag，这是因为源码里面有一个urldecode函数，这就说明了%号解码之后为\x(虽然我用一些代码转化工具测不出来)，在00截断上传shell的时候就是直接改的16进制。<ul>
+<li>base64编码问题<br>base64编码最大的特点就是最后的2个=，所以一般做题的时候碰到最后有==，毫无疑问拿去base64解码，虽然实验吧里有一题是直接把base64编码后的密文交上去，但是大部分情况下base64都是需要解密的</li>
+<li>utf7编码问题<br>utf7的特点就是含有英文字母和+，-符号，碰到一长串英文字母里面有+和-的就去utf7解码</li>
+<li>其他编码问题<br>其他的编码差不多就是md5和sha了，这种也比较好认出来，它们的位数是固定的，由32位，128位，256位等，而且没有特殊符号，都是由数字和字符组成，一般题目里都不会进行加盐，直接拿到解码工具里跑就好了。另外sha1，sha256等这些类型的加密，需要的参数是字符串，如果传入其他类型比如说数组类型的参数就会返回false，实验吧里有一题就是用的这个原理，让两个不相等的数它们的sha1加密后的值相等，这下只需要传入数组，让sha1返回false即可。<ul>
+<li>javascript编码问题，js编码遇到的比较少就记得，实验吧里有一题js是用的jother编码，就是全部由[]组成，js编码问题也比较简单，不需要解码，直接打开开发者工具，切换到控制台，复制过去，直接运行就好。</li>
+</ul>
+</li>
 </ul>
 <hr>
-<p>我的实验结果（为了证明代码的通用性 这个网站，并不是我最初写代码时的目标网站）<br>原来的验证码<br><img src="http://img.blog.csdn.net/20180119120540464?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>去噪后的<br><img src="http://img.blog.csdn.net/20180119120529758?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>识别结果<br><img src="http://img.blog.csdn.net/20180119120548115?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hhb290aXMx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+</li>
+</ol>
+<ul>
+<li><strong>sql注入的一些知识</strong><br>在没有做实验吧的题之前，我对sql注入方面还不怎么了解，做了几个题之后（也可以说看了几个题解之后）我发现sql注入真的是博大精深。<ul>
+<li>sql语句的注释符<br>以前我就知道– 可以注释（注意–后面要有个空格），现在还知道了#，/<em>，；%00。（%00属于我上面说的编码问题，需要在burpsuite里面写），需要注意– 和#号注释是不需要闭合分号的，而/</em>和%00需要闭合分号，这点新手比较容易忽略。在发现这几个注释符被过滤或者waf之后，就需要想办法闭合sql语句，如使用‘’=‘，access数据库中是没有注释符的，只能使用闭合的方法。</li>
+<li>sql语句中的空格替代<br>空格是sql语句中比较重要的东西，要是空格和它的替代品都被替代了的话，sql注入就行不通，因为正常的sql语句都执行不了，空格的url编码为%20，它的替代有/**/注释符替代，%0a是\n的ascii编码，%0d是\t的ascii编码，%09是\r的ascii编码，+号是连接符也可以当空格来使用，一般来说sql注入的题都不会完全封死空格，总有一个能用。</li>
+<li>sql注入中常被过滤或waf掉的字符和他们的作用（做题先看是否过滤）</li>
+</ul>
+<ol>
+<li>and &amp;：and和&amp;都是代表‘与’的关系，即等式两边要都成立才为真，在sql注入之逐字猜解法中用到过，select <em> from table where id=1 and exists(select </em> from admin);（access数据库只有一个数据库，所以不需要先判断数据库）用于一边一定为真的情况。</li>
+<li>or |:表示‘或’的意思，即只要一个为真，整体就为真，这个在sql注入中经常用到，在不知道查询条件如账号密码的时候，随便输入一个并闭合引号然后使用or 1即可查出数据库中所有的信息。</li>
+<li>union:union是联合查询的意思，用于sql注入中的联合查询法，使用union的前提是你使用union查出来的数据列数需要和前面的select查出来的列数一样多，比如前面查询pwd一列，后面查出来也只能有一列，所以联合查询法中先试用order by来判断前面查询的列数。然后在使用union 1，2，3，4，这样使用union会在查询出来的结果中多出一条由1，2，3，4组成的记录，然后再观察这些数字哪些在网页中出现了，再使用database(),user(),version(),@@compile_os_version来查询相应的信息，最后更具table_schema,table_name,columu_name,来进行注入。实验吧里有一题就是利用union在表中构造出一个md5值（数据库居然还可以使用MD5函数），mysql5.0以下不支持union。</li>
+<li>分号：分号是sql注入中用来判断是否存在注入的关键字符，检查网站是否存在注入一般都会先使用分号来判断，分号的主要作用是闭合前面的分号，现在一般网站的登录都是select <em> from admin where username=’ ‘ and pwd=’ ‘;（有时候也会先把值进行过滤），所以分号的作用很关键。。。补充一下在sql语句中and语句的执行是分开的,所以在access万能密码中构造sql语句为select </em> from admin where username(用户名需要知道) and pwd=’ ‘ or ‘1,前面的username判断为真，后面先判断or再判断and，也就是说使用and相当于使用了2句select。同样的情况还有实验吧里的‘登录一下好吗’，代码原语句为select <em> from admin where username=’ ‘ and pwd=’ ‘;这里username和pwd都不知道，这时我们构造<br>select </em> from admin where username=’任意字符’=‘’ and pwd=’任意字符’=‘’;<br>执行的时候先在数据库中匹配你输入的任意字符（应该是找不到的），返回值为空这时再与’‘比较恒为1，’ ‘与0和’0‘也相等。</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>逗号：逗号主要是用于sql语句中一些函数的参数之间，如mid()函数，在逐字猜解法中，会先使用and (selelct top 1 len(username) from admin)&gt;5来判断长度,然后再使用and (select ascii(mid(username,1,1) from admin)&gt;97 来进行猜解，mid()函数就用到了逗号，不过mid函数的逗号可以被mid(str from 1 for 1)来替代。同样功能的函数有substr()函数，和mid的用法差不多，只不过substr的参数代表的是字符下标(从 0开始)，mid()参数表示的字符是第几个(从一开始).</li>
+<li>group:带group关键字的有2个，一个是group by用于分组，实验吧中有一题是用的group by pw with rollup limit 1 offset 2;这样写可以产生新的一行，让group by的对象pw为空，其他的列向上求和再平均(虽然我使用rollup没有向上求和，但是pw确实为空了),limit 1表示取一条记录，offset 2表示从第三条记录开始取起(从0开始)。另外一个就是groupconcat了，用于连接查询结果，默认是用逗号连接，如select group_concat(table_name separator ‘@’) from information_schema.tables，这就把查询出来的所有表名用@连接起来成了一条记录，方便寻找自己所需要的表。与table_name表名相对应的有column_name列名，table_schema数据库名，information_schema.schemata所有数据库的表，information_schema.tables所有数据库中表名的表，information_schema.columns所有数据库中列名的表。</li>
+<li>;，regxp，^,$,+,join，%: 分号是用来结束sql语句，前提是需要使用分号的注释符可以用。regxp，sql语句中的正则匹配，常用于猜解使用python猜解字段，用法select user() regxp ‘正则表达式’，返回的是true或者false。^&amp;是正则匹配中的匹配符代表从开头开始匹配和从结尾开始匹配。+ join是字符串连接用的。%号是用于ascii编码。<ul>
+<li>mysql的一个特性<br>在实验吧里“登陆一下”那个题除了双等号之外还可以使用这个特性来解。当select查询的条件为字符串时(即where=str)，只需要在字符串后面加一个0,’0’或者‘ ’，这个条件就会恒为真。</li>
+</ul>
 <hr>
-<p>大家如果有什么好的建议和想法，可以和我交流一下，让我能改进代码</p>
+</li>
+</ol>
+<ul>
+<li><strong>web题做题一般套路</strong> <ul>
+<li>首先先查看源码，一些代码审计类的题目都会隐藏信息在源码里。</li>
+<li>源码里没有找到什么有用的东西，就使用burpsuite抓包，抓到包之后放入repeater中，观察发送的包里有没有什么特殊的字段，试着更改它然后发送,实验吧里有一题就是通过更改发送包里的source值来得到源码。然后观察回来的包，有不少的题都是在相应包中藏了信息，比如最喜欢使用一个hint字段，然后写着源码文件路径，也有可能出现base64，md5之类的加密，看见了直接解密就好。如果是提示你需要在某个地方，使用某个浏览器，使用什么ip才能登录的题，直接添加头部的字段就好了，比如X-Forwarded-For字段是表示的源ip地址。</li>
+<li>如果前面这几步还没找出头绪，就要考虑是不是注入类的题了，注入一般可以测出哪些被过滤了，哪些被waf了，然后使用剩下来的这些语句进行注入，当遇到过滤的时候可以试着使用双写或者大小写混合的方式来尝试，如果只是过滤一次，那么这种方法就可以成功绕过。当没有太多提示时就需要使用盲注，盲注的一般流程是，看数据库长度，再猜数据库名，然后就是user()长度，名字（这2个属性可以人为更改所以可能有flag）。之后就是查表，查列了。当然在实际运用中sql注入不光是查询还可以改表来提升权限，插入一个新用户等，不过现在一般的网站都会使用转义如\ 让sql注入语句失去了作用。</li>
+</ul>
+<hr>
+</li>
+<li><p><strong>弱类型问题</strong><br>做题的时候碰到了不少弱类型的问题，弱类型是在php，数据库语言中当字符串和数字使用==进行比较的时候，会自动将字符串变为数字。如<br>1==‘1as112a’为true，字符串变成了第一个字母前的数字,0==’asd’也为true，因为第一个字母前没有数字所以被看为0。还有一种特殊的情况，科学计数法表示的数字1e9被程序以字符来记录，当比较‘0e9’==‘0’时，虽然是2个字符在比较，当是0e9会 被看为为数字0，因此会发生弱类型转化，在实验吧里就有这样的一题要求输入的密码md5后==’0’，此时需要找加密后为0e开头的字符串就好了，之前看这个题的一个题解，作者说找以0开头的就行了，我试了半天没成功，最后才发现他给的payload都是md5后以0e开头的。<br>bool类型的1==任何非空的数字和字符串都为真，bool类型的0==都为假。实验吧里有一题就是使用php的序列化a:2:{s:4:”user”;b:1;s:4:”pass”;b:1;}，来构造bool类型的弱类型转化。</p>
+</li>
+<li><p>php的一些知识<br>php中存在不少漏洞函数，如ereg()过滤函数，碰到%00会截断，不过滤后面的数据，isnumeric当传入的参数有空格时就会返回false。当然这些漏洞函数大多数都被新的函数所替代，但还是有不少网站使用这种函数。<br>除了漏洞函数之外，还有一些比较少见的函数，比如strrev取反。</p>
+</li>
+</ul>
+<hr>
+<p>##<strong>以上都是一些个人理解，可能会有一些错误，欢迎大家指出。</strong></p>
 
       
 
@@ -317,7 +297,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chaofly.github.io/2018/01/19/使用python验证码识别来爆破网站后台/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chaofly.github.io/2018/01/25/CTF-web学习心得/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -331,18 +311,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/01/25/CTF-web学习心得/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          CTF web学习心得
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/01/17/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2018/01/19/使用python验证码识别来爆破网站后台/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用python验证码识别来爆破网站后台</div>
       <i class="icon-circle-right"></i>
     </a>
   
